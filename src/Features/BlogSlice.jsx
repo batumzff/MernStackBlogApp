@@ -7,9 +7,10 @@ const initialState = {
   comments: [],
   blogDetail: {},
   categoryDetail: [],
-  details: {},
+  details:{},
   loading: false,
   error: false,
+  blogErrorMessage:""
 };
 
 const BlogSlice = createSlice({
@@ -28,37 +29,32 @@ const BlogSlice = createSlice({
       state.categories = payload[1];
       state.blogs = payload[2];
       // state.comments = payload[3];
-      console.log(payload[2])
     },
 
     getSingleData: (state, { payload }) => {
       state.loading = false;
       state.error = false;
-      if(payload.data && typeof payload.data == "object" && "updatedData" in payload.data ){ state[payload.url] = payload.data.updatedData
-        console.log(payload.data.updatedData)
-      }
-      // else if(payload["updatedData"]) { state[payload.url] = payload.updatedData
-      //   console.log("elseif",payload.updatedData)
-      // }
-
+      console.log(payload);
+      if(payload.data && typeof payload.data == "object" && "updatedData" in payload.data)
+        { state[payload.url] =  payload.data.updatedData}
       else {
-        state[payload.url] = payload?.data.data
+        state[payload.url] = payload.data.data
         state.details = payload?.data?.details
-        console.log("details",payload?.data?.details)
-        console.log("payload",payload)
-        console.log("payload.data",payload.data)
-        // console.log("payload.data.data",payload.data.data)
       }
     },
 
-    fetchFail: (state) => {
+    fetchFail: (state, {payload}) => {
       state.loading = false;
       state.error = true;
+      state.blogErrorMessage= payload?.response?.data?.message
     },
+    clearBlogError:(state) => {
+      state.error = false
+    }
   },
 });
 
-export const { fetchStart, fetchFail, getAllData, getSingleData } =
+export const { fetchStart, fetchFail, getAllData, getSingleData, clearBlogError } =
   BlogSlice.actions;
 
 export default BlogSlice.reducer;
