@@ -1,0 +1,21 @@
+@import "../../../scss/abstract/mixins";
+@import "../../../scss//abstract/colors";
+
+.main {
+  @include flex($fd:column);
+
+  & button {
+    padding: 10px;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.quill {
+    max-width: 100%; /* Ensure the container takes up the full width */
+    overflow-wrap: break-word; /* Allows breaking long words */
+    word-wrap: break-word; /* For older browsers */
+    word-break: break-word;
+  }
+  
+  .editor .ql-editor {
+    white-space: pre-wrap; /* Preserves whitespace and wraps text as in a textarea */
+    word-wrap: break-word; /* Ensures long words break */
+    overflow-wrap: break-word; /* Ensures long words break */
+    min-height: 100px; /* Optional: Give it a minimum height */
+  }

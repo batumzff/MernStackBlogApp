@@ -1,0 +1,11 @@
+@import "../../../scss/abstract/mixins";
+@import "../../../scss/abstract//colors";
+
+
+$container-padding: 20px;
+
+.main {
+  @include flex($fd:column);
+  height: 100dvh;
+  background-color: $background-color2;
+}

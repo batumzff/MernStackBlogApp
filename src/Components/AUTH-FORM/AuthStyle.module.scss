@@ -1,0 +1,80 @@
+@import "../../../scss/abstract/mixins";
+@import "../../../scss/abstract//colors";
+
+
+$container-padding: 20px;
+
+.auth-main {
+    @include flex();
+    min-height: 100dvh;
+    // margin: 1rem;
+    // background-color: $background-color;
+  }
+
+.form-container {
+  @include flex($fd:column);
+  height: 100%;
+//   background-color: $background-color;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+
+
+input {
+  @include input($w:100%, $p:10px);
+
+  &:focus + .user-label,
+  &:not(:placeholder-shown) + .user-label {
+    margin-top: .3rem;
+    top: 0;
+    left: 10px;
+    font-size: 0.75em;
+    color: $primary-color;
+    background-color: $form-background-color;
+    padding: 0 5px;
+  }
+}
+
+.user-label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: $text-color;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.error {
+  color: $error-color;
+  font-size: 0.875em;
+  margin-top: 5px;
+}
+
+button {
+  @include button($w:100%);
+}
+
+form {
+  @include form();
+}
+
+
+.error-message {
+  @include flex($fd:column);
+  margin: 10rem;
+   & a {
+    text-decoration: none;
+    @include button($p:1rem);
+   }
+}
+
+.auth-button {
+    @include flex($g:0.1rem);
+    margin-left: 1rem;
+}

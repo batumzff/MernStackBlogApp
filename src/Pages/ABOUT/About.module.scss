@@ -1,0 +1,87 @@
+@import "../../../scss/abstract/mixins";
+
+.main-about {
+    min-height: 100dvh;
+    padding: .5rem;
+    @include flex($fd: column,$g:2rem,$ai:center);
+    // font-family: "Akaya Telivigala",sans-serif;    
+    font-family: "Goudy Bookletter 1911",sans-serif;    
+    & .title{
+       @include flex($fd:column);
+       animation: moveFromLeft 3s ease-in-out ;
+    }
+
+    & .list {
+        @include flex($fd:column);
+        & ol{
+            list-style-type: disc;
+            :nth-child(1){
+                animation: moveFromTop 3s ease-in-out ;
+            }
+            :nth-child(2){
+                animation: moveFromBottom 3s ease-in-out ;
+            }
+            & li{
+                margin-top: .5rem;
+            }
+        }
+    }
+
+    & .about-last{
+        @include flex($fd:column);
+        animation: moveFromBottom 3s ease-in-out ;
+    }
+}
+
+
+.main-intro {
+    /* background-color: red; */
+    transition: 2s ease-in-out;
+    animation: moveFromTop 1s ease-in-out; 
+}
+
+
+@keyframes moveFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes moveFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes moveFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

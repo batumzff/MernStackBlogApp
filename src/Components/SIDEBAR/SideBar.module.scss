@@ -1,0 +1,84 @@
+@import "../../../scss/abstract/mixins";
+
+$primary-color: #3498db;
+$secondary-color: #bd10e0;
+$text-color: #333;
+$background-color: rgba(238, 232, 232, 0.949);
+$box-shadow-color: rgba(92, 84, 112, 0.37);
+$blur-value: 2.5px;
+$padding: 0.5rem;
+$border-radius: 10px;
+
+.container {
+  position: absolute;
+  top: 6rem;
+  right: 0;
+  padding: $padding;
+  background: $background-color;
+  box-shadow: 0 8px 32px 0 $box-shadow-color;
+  backdrop-filter: blur($blur-value);
+  -webkit-backdrop-filter: blur($blur-value);
+  border-radius: $border-radius;
+  z-index: 90;
+  transition: transform 0.3s ease-in-out;
+
+  & main {
+    @include flex($fd: column);
+    background: $background-color;
+    border-radius: 0.5rem;
+  }
+
+  & .navigation {
+    @include flex($fd: column, $ai: flex-start);
+
+    & .logout {
+      text-decoration: none;
+      color: $text-color;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+
+      &:hover {
+        cursor: pointer;
+        color: $primary-color;
+      }
+    }
+    & div {
+      margin: 0 1rem 1rem;
+      @include flex($fd: column);
+
+      & a {
+        text-decoration: none;
+        color: $text-color;
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 580px) {
+  // .container {
+  //   width: 155px;
+  //   top: 80px;
+  //   height: calc(100% - 60px);
+  //   transform: translateX(41%);
+  // }
+  // .link-div{
+  //   padding-right: 2rem;
+  // }
+  .container {
+    position: relative;
+    top: 5px;
+    width: 100svw;
+    height: 100dvh;
+  }
+  .link-div {
+    @include flex();
+  }
+}

@@ -1,0 +1,115 @@
+@import "../../../scss//abstract//mixins";
+
+.main{
+  @include flex();
+  width: 100svw;
+}
+.contact-container {
+  min-height: 100dvh;
+  @include flex($fd: column);
+  font-family: "Anta";
+  font-size: large;
+  line-height: 1.5rem;
+  h3 {
+    margin-top: 2rem;
+    text-align: center;
+    color: #333;
+    span {
+      color: #007bff;
+    }
+  }
+
+  & .explanation {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    @include flex($fd: column);
+  }
+
+  .contact-info {
+    @include flex($g: 2rem);
+    // margin: 1rem;
+   width: 100svw;
+   height: 8rem;
+    a {
+      color: #333;
+      text-decoration: none;
+      @include flex($jc:space-between);
+      position: relative;
+      margin-bottom: 10px;
+      svg {
+        // margin-right: 10px;
+      transition: .3s ease-in-out;
+
+      }
+      &:nth-child(1):hover svg{
+        color: #1471b4c9;
+        font-size: 1.5rem;
+      }
+      &:nth-child(2):hover svg{
+        color: #25d366;
+        font-size: 1.5rem;
+      }
+   
+      & .email {
+        display: none;
+      }
+      &:nth-child(2):hover .email {
+         display: inline-block;
+         position: absolute;
+         margin-left: 7rem;
+         color: #25d366;
+      }
+
+    }
+  
+
+  }
+
+  .contact-footer {
+    margin-top: 20px;
+    @include flex($jc: center, $ai: center, $g: 2rem);
+
+    .icons {
+      @include flex();
+
+      .whatsapp,
+      .facebook,
+      .instagram,
+      .telegram,
+      .twitter {
+        transform-origin: center center;
+        & svg {
+          margin-right: 10px;
+          font-size: 2rem;
+          cursor: pointer;
+          transition: 0.3s ease-in-out;
+        }
+        &:hover:nth-child(1) {
+          color: #25d366;
+        }
+        &:hover:nth-child(2) {
+          color: #007bff;
+        }
+        &:hover:nth-child(3) {
+          color: #c32aa3;
+        }
+        &:hover:nth-child(4) {
+          color: #0088cc;
+        }
+        &:hover:nth-child(5) {
+          // color: #14171a;
+          animation: spin 1s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}

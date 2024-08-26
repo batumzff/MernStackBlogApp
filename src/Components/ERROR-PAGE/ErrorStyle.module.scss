@@ -1,0 +1,22 @@
+
+@import "../../../scss/abstract/mixins";
+
+.main{
+    @include flex();
+    background: url("https://cdn.pixabay.com/photo/2021/10/09/10/17/block-6693735_640.png");
+    background-size: contain;
+    background-position: top center;
+    background-repeat: no-repeat;
+    width: 100svw;
+    height: 100dvh;
+    margin: 2rem;
+
+    & h3 {
+        font-size: xx-large; 
+        text-align: center;
+    }
+    & h5 {
+        font-size: x-large;
+        text-align: center;
+    }
+}

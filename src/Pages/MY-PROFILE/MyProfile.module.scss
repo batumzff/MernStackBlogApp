@@ -1,0 +1,250 @@
+@import "../../../scss/abstract/_mixins.scss";
+@import "../../../scss/abstract/_colors.scss";
+
+.main {
+  min-height: 100dvh;
+  @include flex($fd: column);
+  padding: 20px;
+  background: $background-color  ;
+  .profile-header {
+    @include flex($fd: column);
+    margin-bottom: 20px;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 24px;
+      text-align: center;
+    }
+  }
+
+  .profile-body {
+    margin-bottom: 20px;
+
+    p {
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+
+  button {
+    @include button();
+  }
+
+  form {
+    @include flex($fd: column,$g:.2rem);
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #121212;
+    background-color: $background-color3;
+
+   & .close {
+    position: absolute;
+    top: -1.2rem;
+    right: -10px;
+    background-color: #AC51ED;
+    border: none;
+    outline: none;
+    z-index: 99;
+    padding: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+  @include flex();
+    color: $background-color;
+    font-size: 1.2rem;
+    cursor: pointer;
+  
+   
+    border-radius: 0 0 1rem 1rem; 
+  }
+  
+ 
+  .close:hover {
+    background-color: darken(#AC51ED,20%);
+    border-radius: 50%;
+  }
+  
+
+   & label {
+      width: 100%;
+      font-weight: bold;
+      color: #CA3CF2;
+    }
+
+   & input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+
+   & button {
+      @include button($bg:$primary-color,$hover-c:$background-color,$hover-bg:blueviolet);
+    }
+
+  }
+
+  .blogs {
+    background-color: $background-color;
+    border: 1px solid $card-border-color;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    flex: 0 1 calc(33.333% - 20px); // For three columns layout
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+  
+    h4 {
+      margin: 0;
+      padding: 10px;
+      color: $primary-color;
+      font-size: 1.2em;
+    }
+  
+    img {
+      width: 100%;
+      height: 250px;
+      object-fit: fill;
+      display: block;
+      border-bottom: 1px solid $card-border-color;
+    }
+    & .span-message {
+      width: 100%;
+      @include button();
+    }
+    span {
+      color: $text-color;
+    }
+
+    & .previous-page{
+      @include button();
+    }
+
+    & .profile-cards {
+      position: relative;
+      & .close {
+        position: absolute;
+        top: -.5rem;
+        right: 1px;
+        background-color: #D20358;
+        border: none;
+        outline: none;
+        z-index: 99;
+        padding: .9rem;
+        width: 2rem;
+        height: 2rem;
+      @include flex();
+        color: $background-color;
+        font-size: 1.2rem;
+        cursor: pointer;
+      
+       
+        border-radius: 1rem; 
+      }
+      
+     
+      .close:hover {
+        background-color: darken(#AC51ED,20%);
+        border-radius: 50%;
+      }
+    }
+
+  }
+
+   .no-content{
+    // @include button($w:2rem);
+    background-color: inherit;
+  }
+
+  @media (max-width: 768px) {
+    .profile-header img {
+      width: 100px;
+      height: 100px;
+    }
+
+    .profile-header h2 {
+      font-size: 20px;
+    }
+
+    .profile-body p {
+      font-size: 14px;
+    }
+
+    button {
+      font-size: 14px;
+    }
+
+    form {
+      max-width: 100%;
+      padding: 10px;
+
+      input {
+        padding: 8px;
+      }
+
+      .quill {
+        .ql-container {
+          height: 150px; 
+        }
+      }
+
+      button {
+        padding: 8px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .profile-header img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .profile-header h2 {
+      font-size: 18px;
+    }
+
+    .profile-body p {
+      font-size: 12px;
+    }
+
+    button {
+      font-size: 12px;
+      padding: 8px 15px;
+    }
+
+    form {
+      padding: 5px;
+
+      input {
+        padding: 5px;
+      }
+
+      .quill {
+        .ql-container {
+          height: 100px; 
+        }
+      }
+
+      button {
+        padding: 5px;
+      }
+    }
+  }
+}

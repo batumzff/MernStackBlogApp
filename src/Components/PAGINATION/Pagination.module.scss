@@ -1,0 +1,42 @@
+@import "../../../scss/abstract/mixins";
+@import "../../../scss/abstract/colors";
+
+.main {
+  width: 15rem;
+  @include flex();
+
+  & .container {
+    width: 15rem;
+    @include flex($g:0.5rem);
+    & button {
+      @include button($fs:1rem); 
+    }
+    & .current-page {
+      @include button($bg:transparent, $c:$text-color-2);
+    }
+
+    & .prev-next {
+      @include button($m:0, $bg:transparent, $c:$text-color-2);
+    }
+
+    @media (max-width: 746px) {
+      @include flex($fd: column);
+
+      & button {
+        font-size: 0.8rem;
+      }
+      
+    }
+
+    @media (min-width:768px){
+        & button {
+            font-size: x-large;
+            width: 10rem;
+        }
+        button:has(span) {
+            @include flex();
+            font-size: large;
+            width: 15rem;
+          }
+    }
+  }}

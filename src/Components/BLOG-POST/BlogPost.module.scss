@@ -1,0 +1,6 @@
+@import "../../../scss/abstract/mixins";
+
+.blogPost {
+    color:black
+    &:hover{color: black !important;}
+}

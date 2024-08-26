@@ -1,0 +1,121 @@
+@import "./colors";
+
+@mixin flex($fd: row, $jc: center, $ai: center, $g: 1rem) {
+  display: flex;
+  flex-direction: $fd;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $g;
+}
+
+@mixin grid($gtr: auto, $gtc: repeat(4, 1fr), $g: 0.5rem) {
+  display: grid;
+  grid-template-rows: $gtr;
+  grid-template-columns: $gtc;
+  gap: $g;
+}
+
+@mixin responsive-grid(
+  $small-gtr: auto,
+  $small-gtc: repeat(1, 1fr),
+  $small-g: 1rem,
+  $medium-gtr: auto,
+  $medium-gtc: repeat(3, 1fr),
+  $medium-g: 1.5rem,
+  $large-gtr: auto,
+  $large-gtc: repeat(4, 1fr),
+  $large-g: 2rem
+) {
+  // Small screens
+  @include grid($small-gtr, $small-gtc, $small-g);
+
+  // Medium screens
+  @media (min-width: 600px) {
+    @include grid($medium-gtr, $medium-gtc, $medium-g);
+  }
+
+  // Large screens
+  @media (min-width: 1024px) {
+    @include grid($large-gtr, $large-gtc, $large-g);
+  }
+}
+
+
+// ! FORM
+
+@mixin form(){
+  background-color: $form-background-color;
+  border: 1px solid $form-border-color;
+  border-radius: 10px;
+  padding: $container-padding;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  margin: 1rem;
+}
+
+
+
+// ! BUTTON
+
+@mixin button(
+  $m: 0.5rem,
+  $p: 0.6rem,
+  $w: 10rem,
+  $b-rad: 0.4rem,
+  $b: none,
+  $c: white,
+  $bg: $primary-color,
+  $fs: 1em,
+  $cur: pointer,
+  $t: background-color 0.3s ease,
+  $hover-bg: darken($primary-color, 10%),
+  $hover-c: $form-border-color,
+  $disabled-bg: lighten($primary-color, 20%)
+) {
+  margin: $m;
+  padding: $p;
+  width: $w;
+  border: $b;
+  border-radius: $b-rad;
+  color: $c;
+  background-color: $bg;
+  font-size: $fs;
+  cursor: $cur;
+  transition: $t;
+  &:hover {
+    background-color: $hover-bg;
+    color:$hover-c
+  }
+  &:disabled {
+    background-color: $disabled-bg;
+    cursor: not-allowed;
+  }
+}
+// !
+
+// !INPUT
+
+@mixin input(
+  $w: 20rem,
+  $m: .5rem 0.8rem 0 0,
+  $p: 0.4rem,
+  $b: 1px solid $form-border-color,
+  $b-rad: 0.3rem,
+  $fs: 1em,
+  $t: border-color 0.3s ease,
+  $focus-c: $primary-color
+) {
+  width: $w;
+  margin: $m;
+  padding: $p;
+  border: $b;
+  border-radius: $b-rad;
+  font-size: $fs;
+  transition: $t;
+
+  &:focus {
+    border-color: $focus-c;
+    outline: none;
+  }
+}

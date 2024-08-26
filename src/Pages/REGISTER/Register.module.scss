@@ -1,0 +1,18 @@
+@import "../../../scss/abstract/mixins";
+@import "../../../scss/abstract//colors";
+
+
+$container-padding: 20px;
+
+.register-main {
+  @include flex();
+  min-height: 100dvh;
+  // margin: 1rem;
+  background-color: $background-color2;
+}
+
+.form-container {
+  @include flex($fd:column);
+  @include form();
+  max-width: 600px;
+}
