@@ -3,6 +3,7 @@
     overflow-wrap: break-word; /* Allows breaking long words */
     word-wrap: break-word; /* For older browsers */
     word-break: break-word;
+    overflow-y: auto;
   }
   
   .editor .ql-editor {
@@ -10,4 +11,6 @@
     word-wrap: break-word; /* Ensures long words break */
     overflow-wrap: break-word; /* Ensures long words break */
     min-height: 100px; /* Optional: Give it a minimum height */
+    box-sizing: border-box;
+    // overflow-y: auto;
   }

@@ -3,14 +3,14 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import useBlogData from "../../Custom-hooks/useBlogData";
 import { LiaHeart } from "react-icons/lia";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaEye } from "react-icons/fa";
 import useAxios from "../../Custom-hooks/useAxios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import DOMPurify from "dompurify";
 import { VscEdit } from "react-icons/vsc";
 import BlogModal from "../../Components/BLOG-MODAL/BlogModal";
-import detailStyle from "./BlogDetails.module.scss";
+import style from "./BlogDetails.module.scss";
 import BlogPost from "../../Components/BLOG-POST/BlogPost";
 import EditCommentModal from "../../Components/EDIT-COMMENT-MODAL/EditCommentModal";
 import axios from "axios";
@@ -64,8 +64,8 @@ const BlogDetails = () => {
     });
     // const content = sanitizedContent.replace(/<[^>]*>/g, "");
     const content = sanitizedContent;
-    content !=="" && await postComment("comments", content, blogId);
-    setComment("")
+    content !== "" && (await postComment("comments", content, blogId));
+    setComment("");
   };
 
   const handleDelete = () => {
@@ -103,48 +103,61 @@ const BlogDetails = () => {
   // console.log("user", user);
   // console.log("blogId", blogId);
   return (
-    <main className={detailStyle.main}>
-      <section>
-        <div className={detailStyle["detail-header"]}>
+    <main className={style.main}>
+      <section className={style.container}>
+        <div className={style["detail-header"]}>
           <h2>{blogDetail?.title}</h2>
 
           <img src={blogDetail?.image} alt="blog-image" />
-          <div className={detailStyle.likes}>
-            <LiaHeart
-              onClick={postLike}
-              fill={`${blogDetail?.likes?.includes(user?.id) ? "red" : ""}`}
-            />
-            <span>{blogDetail?.totalLikes}</span>
-          </div>
-          {visitorCount && (
-            <div className={detailStyle.views}>
-              viewed by <span>{visitorCount} </span>
-              <span>{visitorCount > 1 ? "people" : "person"}</span>
-            </div>
-          )}
+          <div className={style.info}>
+            <div className={style["info-left"]}>
+              <div className={style.likes}>
+                <LiaHeart
+                  onClick={postLike}
+                  fill={`${blogDetail?.likes?.includes(user?.id) ? "red" : ""}`}
+                />
+                <span>{blogDetail?.totalLikes}</span>
+              </div>
 
-          {(blogDetail?.userId?._id == user?.id ||
-            user?.isAdmin == true ||
-            user?.isStaff == true) && (
-            <span className={detailStyle.modal}>
-              <FaTrashAlt onClick={handleDelete} />
-              <VscEdit onClick={() => setEditBlogModal(!editBlogModal)} />
-            </span>
-          )}
-          {/* <p className={detailStyle.content}>{blogDetail?.content}</p> */}
+              {visitorCount && (
+                <div className={style.views}>
+                  <div>
+                    <FaEye />
+                  </div>
+                  viewed by <span>{visitorCount} </span>
+                  <span>{visitorCount > 1 ? "people" : "person"}</span>
+                </div>
+              )}
+            </div>
+            <div className={style["info-right"]}>
+              <span>
+                {new Date(blogDetail?.createdAt).toLocaleDateString()}
+              </span>
+
+              {(blogDetail?.userId?._id == user?.id ||
+                user?.isAdmin == true ||
+                user?.isStaff == true) && (
+                <span className={style.modal}>
+                  <FaTrashAlt onClick={handleDelete} />
+                  <VscEdit onClick={() => setEditBlogModal(!editBlogModal)} />
+                </span>
+              )}
+            </div>
+          </div>
+
           <BlogPost content={blogDetail?.content} />
         </div>
 
         <button
           data-test="showHideComments"
-          className={detailStyle.button}
+          className={style.button}
           onClick={() => setShow((prev) => !prev)}
         >
           {show ? "Hide" : "Show"} Comments
         </button>
 
         {show && (
-          <div className={detailStyle.comment}>
+          <div className={style.comment}>
             {/* <h4>{comments?.userId.username}</h4> */}
             {blogDetail?.comments?.filter(
               (comment) => comment.isDeleted == false
@@ -196,14 +209,14 @@ const BlogDetails = () => {
         )}
         {show && !commentModal && (
           <ReactQuill
-            className={detailStyle.quill}
+            className={style.quill}
             theme="snow"
             value={comment}
             onChange={setComment}
           />
         )}
         {show && !commentModal && (
-          <button className={detailStyle.button} onClick={handleComment}>
+          <button className={style.button} onClick={handleComment}>
             Add Your Comment
           </button>
         )}
