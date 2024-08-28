@@ -4,9 +4,11 @@
     word-wrap: break-word; /* For older browsers */
     word-break: break-word;
     overflow-y: auto;
+    background-color: white !important;
   }
   
   .editor .ql-editor {
+    background-color: white !important;
     white-space: pre-wrap; /* Preserves whitespace and wraps text as in a textarea */
     word-wrap: break-word; /* Ensures long words break */
     overflow-wrap: break-word; /* Ensures long words break */

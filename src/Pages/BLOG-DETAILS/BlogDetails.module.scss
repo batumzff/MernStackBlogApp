@@ -102,16 +102,18 @@
     .comment {
       width: 100%;
       max-width: 800px;
-      background-color: white;
+      // background-color: white ;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 8px 32px 0 rgba(92, 84, 112, 0.37);
       margin-top: 20px;
     }
 
+
     .quill {
       width: 100%;
       margin-top: 10px;
+      background-color: white ;
     }
 
     .likes {

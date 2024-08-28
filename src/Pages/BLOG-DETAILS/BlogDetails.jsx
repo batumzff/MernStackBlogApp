@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import useBlogData from "../../Custom-hooks/useBlogData";
@@ -14,6 +14,7 @@ import style from "./BlogDetails.module.scss";
 import BlogPost from "../../Components/BLOG-POST/BlogPost";
 import EditCommentModal from "../../Components/EDIT-COMMENT-MODAL/EditCommentModal";
 import axios from "axios";
+import QuillEditor from "../../Components/QUILL/QuillEditor";
 
 const BlogDetails = () => {
   const { blogDetail } = useSelector((state) => state.blog);
@@ -38,6 +39,7 @@ const BlogDetails = () => {
 
   const [commentModal, setCommentModal] = useState(false);
 
+  const quillRef = useRef(null)
   const navigate = useNavigate();
 
   console.log(blogDetail);
@@ -59,13 +61,17 @@ const BlogDetails = () => {
   };
 
   const handleComment = async () => {
-    const sanitizedContent = DOMPurify.sanitize(comment, {
+    // const sanitizedContent = DOMPurify.sanitize(comment, {
+    //   USE_PROFILES: { html: true },
+    // });
+    const sanitizedContent = DOMPurify.sanitize(quillRef.current.value, {
       USE_PROFILES: { html: true },
     });
     // const content = sanitizedContent.replace(/<[^>]*>/g, "");
     const content = sanitizedContent;
     content !== "" && (await postComment("comments", content, blogId));
-    setComment("");
+    // setComment("");
+    
   };
 
   const handleDelete = () => {
@@ -207,14 +213,15 @@ const BlogDetails = () => {
             )}
           </div>
         )}
+        
+
         {show && !commentModal && (
-          <ReactQuill
-            className={style.quill}
-            theme="snow"
-            value={comment}
-            onChange={setComment}
+          <QuillEditor
+            defaultValue=""
+            ref={quillRef}
           />
         )}
+        
         {show && !commentModal && (
           <button className={style.button} onClick={handleComment}>
             Add Your Comment
