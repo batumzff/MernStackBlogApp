@@ -61,17 +61,12 @@ const BlogDetails = () => {
   };
 
   const handleComment = async () => {
-    // const sanitizedContent = DOMPurify.sanitize(comment, {
-    //   USE_PROFILES: { html: true },
-    // });
-    const sanitizedContent = DOMPurify.sanitize(quillRef.current.value, {
+    const sanitizedContent = DOMPurify.sanitize(comment, {
       USE_PROFILES: { html: true },
     });
-    // const content = sanitizedContent.replace(/<[^>]*>/g, "");
     const content = sanitizedContent;
     content !== "" && (await postComment("comments", content, blogId));
-    // setComment("");
-    
+    setComment("");
   };
 
   const handleDelete = () => {
@@ -217,8 +212,8 @@ const BlogDetails = () => {
 
         {show && !commentModal && (
           <QuillEditor
-            defaultValue=""
-            ref={quillRef}
+            value={comment}
+            onChange={setComment}
           />
         )}
         
@@ -227,7 +222,6 @@ const BlogDetails = () => {
             Add Your Comment
           </button>
         )}
-      </section>
       {editBlogModal && (
         <BlogModal
           {...blogDetail}
@@ -248,6 +242,7 @@ const BlogDetails = () => {
           updateComment={updateComment}
         />
       )}
+      </section>
     </main>
   );
 };

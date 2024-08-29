@@ -1,10 +1,10 @@
 import React from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import DOMPurify from "dompurify";
-import { modules } from "../../Helpers/quillModules";
-import useAxios from "../../Custom-hooks/useAxios";
 import style from "../../Pages/BLOG-DETAILS/BlogDetails.module.scss";
+import useDebounce from "../../Custom-hooks/useDebounce";
+import QuillEditor from "../QUILL/QuillEditor";
+import edit from "./EditCommentModal.module.scss"
 
 const EditCommentModal = ({
   editComment,
@@ -18,12 +18,15 @@ const EditCommentModal = ({
   // console.log("edit comment", editComment);
   // console.log(id);
 
-  const { axiosWithToken } = useAxios();
+  
+  const debouncedValue = useDebounce(editComment);
 
-  const handleEdit = async () => {
-    console.log(editComment);
+  const handleEdit = () => {
+    // console.log(editComment);
+    console.log(debouncedValue);
 
-    const sanitizedContent = DOMPurify.sanitize(editComment, {
+    // const sanitizedContent = DOMPurify.sanitize(editComment, { USE_PROFILES: { html: true } });
+    const sanitizedContent = DOMPurify.sanitize(debouncedValue, {
       USE_PROFILES: { html: true },
     });
     const content = sanitizedContent;
@@ -33,43 +36,36 @@ const EditCommentModal = ({
       blogId,
       userId,
     };
-    //  const { data } = await axiosWithToken.put(`comments/${id}`,content)
-    //  const { data } = await axiosWithToken.put(`comments/${id}`,editCommentData)
-    const { data } = await updateComment(
-      "blogDetail",
-      id,
-      blogId,
-      editCommentData
-    );
 
-    console.log("updateComment data", data);
-    console.log("******------*****", data);
-    console.log("comment edit modal set edit", data?.updatedData?.content);
-    setEditComment(data?.updatedData?.content);
-    // const res = await axiosWithToken(`comments/${id}`)
-    // console.log("response",res?.data?.data?.content);
+    updateComment("blogDetail", id, blogId, editCommentData);
+
     onClose();
   };
 
-  console.log(editComment);
+  // console.log(editComment);
+  console.log(debouncedValue);
   return (
-    <main style={{ marginTop: "1rem" }}>
+    <main className={edit.container}>
+      <section className={edit.editor}>
+        <QuillEditor value={editComment} onChange={setEditComment} />
+      </section>
       <div>
-        <ReactQuill
-          //   className={detailStyle.quill}
-          theme="snow"
-          value={editComment}
-          onChange={setEditComment}
-          modules={modules}
-        />
-      </div>
+
       <button
         className={style.button}
         onClick={handleEdit}
-        style={{ margin: "1rem auto" }}
+        
       >
         Submit
       </button>
+      <button
+        className={style.button}
+        onClick={() => onClose()}
+        style={{  backgroundColor: "red" }}
+      >
+        Cancel
+      </button>
+      </div>
     </main>
   );
 };

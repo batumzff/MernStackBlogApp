@@ -1,0 +1,11 @@
+@import "../../../scss/abstract/mixins";
+
+.container {
+  @include flex($fd: column);
+ 
+}
+
+.editor {
+  //   @include flex();
+  width: 100%;
+}
