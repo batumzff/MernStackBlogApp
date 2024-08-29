@@ -39,7 +39,7 @@ const BlogDetails = () => {
 
   const [commentModal, setCommentModal] = useState(false);
 
-  const quillRef = useRef(null)
+  const quillRef = useRef(null);
   const navigate = useNavigate();
 
   console.log(blogDetail);
@@ -65,8 +65,18 @@ const BlogDetails = () => {
       USE_PROFILES: { html: true },
     });
     const content = sanitizedContent;
-    content !== "" && (await postComment("comments", content, blogId));
-    setComment("");
+    const innerElement = ["h1", "h2", "h3", "h4", "h5", "h6", "p"];
+    const isEmptyContent = innerElement.some((tag) => {
+      const emptyTagPattern = new RegExp(
+        `<${tag}><br></${tag}>|<${tag}>\\s*</${tag}>`,
+        "i"
+      );
+      return emptyTagPattern.test(content);
+    });
+    if (!isEmptyContent) {
+      await postComment("comments", content, blogId);
+      setComment("");
+    }
   };
 
   const handleDelete = () => {
@@ -149,6 +159,8 @@ const BlogDetails = () => {
           <BlogPost content={blogDetail?.content} />
         </div>
 
+        
+
         <button
           data-test="showHideComments"
           className={style.button}
@@ -156,6 +168,7 @@ const BlogDetails = () => {
         >
           {show ? "Hide" : "Show"} Comments
         </button>
+        
 
         {show && (
           <div className={style.comment}>
@@ -166,27 +179,21 @@ const BlogDetails = () => {
               blogDetail?.comments
                 ?.filter((comment) => comment.isDeleted == false)
                 .map((comment) => (
-                  <div key={comment._id}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        height: "40px",
-                      }}
-                    >
+                  <div className={style.comments} key={comment._id}>
+                    <div  >
                       {editComment ? (
                         <BlogPost
                           content={comment?.content}
                           edited={editComment}
                         />
                       ) : (
+                        
                         <BlogPost content={comment?.content} />
                       )}
                       {(user?.id == comment?.userId ||
                         user?.isAdmin ||
                         user?.isStaff) && (
-                        <div>
+                        <div >
                           <FaTrashAlt
                             onClick={() => handleCommentDelete(comment?._id)}
                             color="red"
@@ -198,7 +205,7 @@ const BlogDetails = () => {
                         </div>
                       )}
                     </div>
-                    <div style={{ border: "2px solid gray" }} />
+                    {/* <div style={{ border: "2px solid gray" }} /> */}
                   </div>
                 ))
             ) : (
@@ -210,38 +217,38 @@ const BlogDetails = () => {
         )}
         
 
+
         {show && !commentModal && (
-          <QuillEditor
-            value={comment}
-            onChange={setComment}
-          />
+          <QuillEditor value={comment} onChange={setComment} />
         )}
-        
+
         {show && !commentModal && (
           <button className={style.button} onClick={handleComment}>
             Add Your Comment
           </button>
         )}
-      {editBlogModal && (
-        <BlogModal
-          {...blogDetail}
-          blogId={blogId}
-          categoryId={categoryId}
-          onClose={setEditBlogModal}
-        />
-      )}
-      {commentModal && (
-        <EditCommentModal
-          {...blogDetail}
-          setEditComment={setEditComment}
-          editComment={editComment}
-          id={editCommentID}
-          onClose={setCommentModal}
-          userId={user?.id}
-          blogId={blogId}
-          updateComment={updateComment}
-        />
-      )}
+        {editBlogModal && (
+          <BlogModal
+            {...blogDetail}
+            blogId={blogId}
+            categoryId={categoryId}
+            onClose={setEditBlogModal}
+          />
+        )}
+        {commentModal && (
+          <EditCommentModal
+            {...blogDetail}
+            setEditComment={setEditComment}
+            editComment={editComment}
+            id={editCommentID}
+            onClose={setCommentModal}
+            userId={user?.id}
+            blogId={blogId}
+            updateComment={updateComment}
+          />
+        )}
+        
+
       </section>
     </main>
   );
