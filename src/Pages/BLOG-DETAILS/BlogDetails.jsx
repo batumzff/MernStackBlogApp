@@ -210,7 +210,7 @@ const BlogDetails = () => {
                       {editComment ? (
                         <BlogPost
                           content={comment?.content}
-                          edited={editComment}
+                          
                         />
                       ) : (
                         <BlogPost content={comment?.content} />

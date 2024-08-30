@@ -1,6 +1,16 @@
 @import "../../../scss/abstract/mixins";
 
 .blogPost {
-    color:black
-    &:hover{color: black !important;}
+  color:black &:hover {
+    color: black !important;
+    
+}
+& p,h1,h2,h3,h4,h5,h6
+{
+ word-wrap: break-word;
+ overflow-wrap: break-word;
+ word-break: break-word;
+ white-space: normal;
+}
+  
 }

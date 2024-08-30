@@ -1,25 +1,33 @@
 .quill {
-    max-width: 100%; /* Ensure the container takes up the full width */
-    overflow-wrap: break-word; /* Allows breaking long words */
-    word-wrap: break-word; /* For older browsers */
-    word-break: break-word;
-    overflow-y: auto;
-    background-color: white !important;
-    border-radius: 10px;
-    margin: 5px;
-    
-  }
-  
+  max-width: 100%; /* Ensure the container takes up the full width */
+  overflow-wrap: break-word; /* Allows breaking long words */
+  word-wrap: break-word; /* For older browsers */
+  word-break: break-word;
+  overflow-y: auto;
+  background-color: white !important;
+  border-radius: 10px;
+  margin: 5px;
+}
 
-  
-  
-  .inner .ql-editor {
-    background-color: white !important;
-    white-space: pre-wrap; /* Preserves whitespace and wraps text as in a textarea */
-    word-wrap: break-word; /* Ensures long words break */
-    overflow-wrap: break-word; /* Ensures long words break */
-    min-height: 100px; /* Optional: Give it a minimum height */
-   
-    
-    // overflow-y: auto;
-  }
+.inner .ql-editor {
+  background-color: white !important;
+  white-space: pre-wrap; /* Preserves whitespace and wraps text as in a textarea */
+  word-wrap: break-word; /* Ensures long words break */
+  overflow-wrap: break-word; /* Ensures long words break */
+  min-height: 100px; /* Optional: Give it a minimum height */
+  max-width: 100%;
+
+  // overflow-y: auto;
+}
+.inner .ql-editor p,
+.inner .ql-editor h1,
+.inner .ql-editor h2,
+.inner .ql-editor h3,
+.inner .ql-editor h4,
+.inner .ql-editor h5,
+.inner .ql-editor h6 {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+}
