@@ -2,7 +2,8 @@
 
 .main-about {
     min-height: 100dvh;
-    padding: .5rem;
+    padding: 5rem;
+    
     @include flex($fd: column,$g:2rem,$ai:center);
     // font-family: "Akaya Telivigala",sans-serif;    
     font-family: "Goudy Bookletter 1911",sans-serif;    

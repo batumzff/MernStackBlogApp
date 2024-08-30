@@ -1,26 +1,29 @@
-@import "../../../scss//abstract//mixins";
+@import "../../../scss/abstract/mixins";
 
 .main{
   @include flex();
-  width: 100svw;
+  width: 100%;
+  
+  
 }
 .contact-container {
+  
   min-height: 100dvh;
   @include flex($fd: column);
   font-family: "Anta";
   font-size: large;
   line-height: 1.5rem;
-  h3 {
+  & h3 {
     margin-top: 2rem;
     text-align: center;
     color: #333;
-    span {
+    & span {
       color: #007bff;
     }
   }
 
   & .explanation {
-    margin: 0.5rem;
+    margin: 5rem;
     padding: 0.5rem;
     @include flex($fd: column);
   }

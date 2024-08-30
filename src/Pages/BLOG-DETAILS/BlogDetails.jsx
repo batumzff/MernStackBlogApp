@@ -32,6 +32,7 @@ const BlogDetails = () => {
   const [likeStatus, setLikeStatus] = useState("");
   const { axiosWithToken } = useAxios();
 
+
   const [show, setShow] = useState(false);
   const [comment, setComment] = useState("");
   const [editBlogModal, setEditBlogModal] = useState(false);
@@ -71,6 +72,7 @@ const BlogDetails = () => {
   };
 
   const handleComment = async () => {
+    console.log("handle comment runs");
     const sanitizedContent = DOMPurify.sanitize(comment, {
       USE_PROFILES: { html: true },
     });
@@ -126,10 +128,24 @@ const BlogDetails = () => {
     setShow((prev) => !prev);
   };
 
-  console.log(editCommentID);
-  console.log(editComment);
+  // ! blog belongs to logged in user or user is Admin or Staff check
+const userStatusCheck = useMemo(() => blogDetail?.userId?._id || blogDetail?.userId == user?.id ||
+user?.isAdmin ||
+user?.isStaff, [blogDetail, user]) 
+
+// ! comment belongs to logged in user or user is Admin or Staff check
+const userCommentCheck = useMemo(() =>  blogDetail?.comments
+?.filter((comment) => comment.isDeleted == false)
+.map((comment) => (user?.id == comment?.userId ||
+  user?.isAdmin ||
+  user?.isStaff)), [blogDetail?.comments,user]) 
+                  
+  // console.log(editCommentID);
+  // console.log(editComment);
   // console.log("user", user);
-  // console.log("blogId", blogId);
+  // console.log("blogDetail", blogDetail);
+  // // console.log("blogId", blogId);
+  // console.log(blogDetail?.userId?._id == user?.id);
   return (
     <main className={style.main}>
       <section className={style.container}>
@@ -158,17 +174,15 @@ const BlogDetails = () => {
               )}
             </div>
             <div className={style["info-right"]}>
-              <span>
+              <span className={style.date}>
                 {new Date(blogDetail?.createdAt).toLocaleDateString()}
               </span>
 
-              {(blogDetail?.userId?._id == user?.id ||
-                user?.isAdmin == true ||
-                user?.isStaff == true) && (
-                <span className={style.modal}>
+              {userStatusCheck && (
+                <div className={style.modal}>
                   <FaTrashAlt onClick={handleDelete} />
                   <VscEdit onClick={() => setEditBlogModal(!editBlogModal)} />
-                </span>
+                </div>
               )}
             </div>
           </div>
@@ -203,22 +217,20 @@ const BlogDetails = () => {
                       boxShadow:"0 8px 32px 0 rgba(92, 84, 112, 0.37)",
                       borderRadius:"5px",
                       margin:"6px",
-                      backgroundColor:"#f0d5e9"
+                      color:"black",
+                      backgroundColor:"white"
                     }}
                   >
                     <div style={{ width: "100%" }}>
                       {editComment ? (
                         <BlogPost
                           content={comment?.content}
-                          
                         />
                       ) : (
                         <BlogPost content={comment?.content} />
                       )}
                     </div>
-                    {(user?.id == comment?.userId ||
-                      user?.isAdmin ||
-                      user?.isStaff) && (
+                    {userCommentCheck && (
                       <div style={{ width: "100%", textAlign: "right" }}>
                         <FaTrashAlt
                           onClick={() => handleCommentDelete(comment?._id)}

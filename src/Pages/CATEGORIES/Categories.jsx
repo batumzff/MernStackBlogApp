@@ -95,7 +95,7 @@ const Categories = () => {
             <ErrorPage msg={blogErrorMessage} blogError={error} />
           ) : (
             categories?.map((category) => (
-              <>
+              <React.Fragment key={category._id}>
                 <h3 onClick={() => handleClick(category._id)}>
                   {category.name}{" "}
                 </h3>
@@ -104,7 +104,7 @@ const Categories = () => {
                     <VscEdit />
                   </div>
                 )}
-              </>
+              </React.Fragment>
             ))
           )}
         </section>

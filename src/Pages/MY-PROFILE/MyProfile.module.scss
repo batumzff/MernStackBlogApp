@@ -51,7 +51,7 @@
     position: absolute;
     top: -1.2rem;
     right: -10px;
-    background-color: #AC51ED;
+    background-color:  $background-color;
     border: none;
     outline: none;
     z-index: 99;
@@ -59,7 +59,7 @@
     width: 2rem;
     height: 2rem;
   @include flex();
-    color: $background-color;
+    color: #674188;
     font-size: 1.2rem;
     cursor: pointer;
   
@@ -69,6 +69,7 @@
   
  
   .close:hover {
+    color: white;
     background-color: darken(#AC51ED,20%);
     border-radius: 50%;
   }
@@ -142,7 +143,7 @@
         position: absolute;
         top: -.5rem;
         right: 1px;
-        background-color: #D20358;
+        background-color: $background-color;
         border: none;
         outline: none;
         z-index: 99;
@@ -150,7 +151,7 @@
         width: 2rem;
         height: 2rem;
       @include flex();
-        color: $background-color;
+        color: #674188;
         font-size: 1.2rem;
         cursor: pointer;
       
@@ -160,6 +161,7 @@
       
      
       .close:hover {
+        color: white;
         background-color: darken(#AC51ED,20%);
         border-radius: 50%;
       }
