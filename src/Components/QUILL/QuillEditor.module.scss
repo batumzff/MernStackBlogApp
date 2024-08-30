@@ -5,7 +5,13 @@
     word-break: break-word;
     overflow-y: auto;
     background-color: white !important;
+    border-radius: 10px;
+    margin: 5px;
+    
   }
+  
+
+  
   
   .inner .ql-editor {
     background-color: white !important;
@@ -13,6 +19,7 @@
     word-wrap: break-word; /* Ensures long words break */
     overflow-wrap: break-word; /* Ensures long words break */
     min-height: 100px; /* Optional: Give it a minimum height */
-    box-sizing: border-box;
+   
+    
     // overflow-y: auto;
   }

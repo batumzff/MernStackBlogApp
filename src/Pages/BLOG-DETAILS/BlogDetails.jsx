@@ -15,6 +15,7 @@ import BlogPost from "../../Components/BLOG-POST/BlogPost";
 import EditCommentModal from "../../Components/EDIT-COMMENT-MODAL/EditCommentModal";
 import axios from "axios";
 import QuillEditor from "../../Components/QUILL/QuillEditor";
+import { useMemo } from "react";
 
 const BlogDetails = () => {
   const { blogDetail } = useSelector((state) => state.blog);
@@ -45,10 +46,19 @@ const BlogDetails = () => {
   console.log(blogDetail);
 
   useEffect(() => {
-    getDetailPage("blogDetail", blogId);
-    getLike("blogs", blogId);
-    getComment("blogDetail", blogId);
-  }, [likeStatus, editComment, commentModal]);
+    const fetchAllData = async () => {
+      try {
+        await Promise.all([
+          getDetailPage("blogDetail", blogId),
+          getLike("blogs", blogId),
+        ]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchAllData();
+  }, [likeStatus, editComment, blogId]);
   // console.log(blogId);
   const postLike = async () => {
     try {
@@ -83,7 +93,9 @@ const BlogDetails = () => {
     const data = axiosWithToken.delete(`blogs/${blogDetail?._id}`);
     navigate("/blogs");
   };
-  let visitorCount = blogDetail?.countOfViews?.length;
+  let visitorCount = useMemo(() => {
+    return blogDetail?.countOfViews?.length;
+  }, [blogDetail]);
   visitorCount = visitorCount == 0 ? 1 : visitorCount;
 
   const categoryId = blogDetail?.categoryId;
@@ -91,11 +103,12 @@ const BlogDetails = () => {
 
   const handleCommentEdit = async (id) => {
     console.log(id);
-    setCommentModal((prev) => !prev);
-    const check = blogDetail?.comments.filter((comment) => comment._id == id);
+    setCommentModal(true);
+    const check =  blogDetail?.comments.filter((comment) => comment._id == id);
 
     console.log(check);
     // console.log(check[0].content);
+    
     setEditComment(check[0].content);
     setEditCommentID(id);
   };
@@ -109,6 +122,10 @@ const BlogDetails = () => {
     }
     console.log(commentId);
   };
+  const showHideComments = () => {
+    setShow((prev) => !prev);
+  };
+
   console.log(editCommentID);
   console.log(editComment);
   // console.log("user", user);
@@ -159,16 +176,13 @@ const BlogDetails = () => {
           <BlogPost content={blogDetail?.content} />
         </div>
 
-        
-
         <button
           data-test="showHideComments"
           className={style.button}
-          onClick={() => setShow((prev) => !prev)}
+          onClick={showHideComments}
         >
           {show ? "Hide" : "Show"} Comments
         </button>
-        
 
         {show && (
           <div className={style.comment}>
@@ -179,32 +193,43 @@ const BlogDetails = () => {
               blogDetail?.comments
                 ?.filter((comment) => comment.isDeleted == false)
                 .map((comment) => (
-                  <div className={style.comments} key={comment._id}>
-                    <div  >
+                  <div
+                    className={style.comments}
+                    key={comment._id}
+                    style={{
+                      display: "flex",
+                      padding: "1rem",
+                      borderBottom:"2px solid gray",
+                      boxShadow:"0 8px 32px 0 rgba(92, 84, 112, 0.37)",
+                      borderRadius:"5px",
+                      margin:"6px",
+                      backgroundColor:"#f0d5e9"
+                    }}
+                  >
+                    <div style={{ width: "100%" }}>
                       {editComment ? (
                         <BlogPost
                           content={comment?.content}
                           edited={editComment}
                         />
                       ) : (
-                        
                         <BlogPost content={comment?.content} />
                       )}
-                      {(user?.id == comment?.userId ||
-                        user?.isAdmin ||
-                        user?.isStaff) && (
-                        <div >
-                          <FaTrashAlt
-                            onClick={() => handleCommentDelete(comment?._id)}
-                            color="red"
-                          />
-                          <VscEdit
-                            onClick={() => handleCommentEdit(comment?._id)}
-                            color="green"
-                          />
-                        </div>
-                      )}
                     </div>
+                    {(user?.id == comment?.userId ||
+                      user?.isAdmin ||
+                      user?.isStaff) && (
+                      <div style={{ width: "100%", textAlign: "right" }}>
+                        <FaTrashAlt
+                          onClick={() => handleCommentDelete(comment?._id)}
+                          color="red"
+                        />
+                        <VscEdit
+                          onClick={() => handleCommentEdit(comment?._id)}
+                          color="green"
+                        />
+                      </div>
+                    )}
                     {/* <div style={{ border: "2px solid gray" }} /> */}
                   </div>
                 ))
@@ -215,11 +240,9 @@ const BlogDetails = () => {
             )}
           </div>
         )}
-        
-
 
         {show && !commentModal && (
-          <QuillEditor value={comment} onChange={setComment} />
+          <QuillEditor  value={comment} onChange={setComment} />
         )}
 
         {show && !commentModal && (
@@ -235,7 +258,7 @@ const BlogDetails = () => {
             onClose={setEditBlogModal}
           />
         )}
-        {commentModal && (
+        {commentModal && show && (
           <EditCommentModal
             {...blogDetail}
             setEditComment={setEditComment}
@@ -247,8 +270,6 @@ const BlogDetails = () => {
             updateComment={updateComment}
           />
         )}
-        
-
       </section>
     </main>
   );
