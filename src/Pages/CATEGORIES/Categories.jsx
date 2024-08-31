@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useBlogData from "../../Custom-hooks/useBlogData";
 import ErrorPage from "../../Components/ERROR-PAGE/ErrorPage";
@@ -24,14 +24,15 @@ const Categories = () => {
 
   const debouncedName = useDebounce(categoryName, 500);
 
+  
   useEffect(() => {
     getData("categories");
   }, []);
   // console.log(categories);
   // console.log(user);
 
-  const handleClick = async (categoryId) => {
-    // console.log(categoryId);
+  const handleClick = useCallback( async (categoryId) => {
+    console.log(categoryId);
     setCategoryId(categoryId);
     try {
       const data = await getCategoryById("categoryDetail", categoryId);
@@ -40,7 +41,7 @@ const Categories = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  },[categoryId]);
 
   const handleChange = (e) => {
     setCategoryName(e.target.value);
